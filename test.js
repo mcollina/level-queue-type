@@ -92,3 +92,27 @@ test('clear should remove all elements from the db', function(t) {
 
   twoElements(q, clear(q, verifyCount(db, 0, t)));
 });
+
+test('two concurrent shifts', function(t) {
+  var db = level()
+
+    , q = queue(db, 'my-awesome-queue')
+
+    , shiftCount = 2
+
+    , verify = verifyCount(db, 0, t)
+
+    , done = function() {
+               if (--shiftCount === 0) {
+                 verify()
+               }
+             }
+
+    , doShift = shift(q, done)
+
+
+  twoElements(q, function() {
+    doShift()
+    doShift()
+  });
+});
