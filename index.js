@@ -12,8 +12,6 @@ function Queue(db, name) {
   }
 
   this._name = name
-
-  this._shifts = []
 }
 
 module.exports = Queue
@@ -27,19 +25,18 @@ Queue.prototype.push = function(element, callback) {
 }
 
 Queue.prototype.shift = function(callback) {
-  this._shifts.push(callback)
-
   if (!this._db._queuesStreams[this._name]) {
     this._startStream()
   }
+  this._db._queuesStreams[this._name].shifts.push(callback)
 }
 
-Queue.prototype._startStream = function() {
+Queue.prototype._startStream = function(first) {
   var stream = this._db.createReadStream()
 
     , db = this._db
 
-    , shifts = this._shifts
+    , shifts = []
 
     , name = this._name
 
@@ -69,6 +66,7 @@ Queue.prototype._startStream = function() {
 
   stream.on('end', onEnd)
 
+  stream.shifts = shifts
   db._queuesStreams[name] = stream
 
   return stream;
