@@ -1,5 +1,5 @@
 {
-  "name": "level-queue",
+  "name": "level-queue-type",
   "version": "0.1.0",
   "description": "A queue for LevelUp",
   "main": "index.js",
@@ -12,10 +12,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcollina/level-queue.git"
+    "url": "https://github.com/mcollina/level-queue-type.git"
   },
   "bugs": {
-    "url": "http://github.com/mcollina/level-queue/issues"
+    "url": "http://github.com/mcollina/level-queue-type/issues"
   },
   "author": "Matteo Collina <hello@matteocollina.com>",
   "license": "MIT",

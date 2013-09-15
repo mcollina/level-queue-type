@@ -1,14 +1,15 @@
-# level-queue
+# level-queue-type
 
 The queue datatype inside leveldb, it supports concurrent shift and
 pushes!
 
-[![build status](https://secure.travis-ci.org/mcollina/level-queue.png)](http://travis-ci.org/mcollina/level-queue)
+[![build
+status](https://secure.travis-ci.org/mcollina/level-queue-type.png)](http://travis-ci.org/mcollina/level-queue-type)
 
 ## Example
 
 ```js
-var queue = require('level-queue');
+var queue = require('level-queue-type');
 var level = require('level');
 
 var db = level(__dirname + '/db');
@@ -30,7 +31,7 @@ people.shift(function(err, value) {
 With [npm](https://npmjs.org) do:
 
 ```bash
-npm install level-queue
+npm install level-queue-type
 ```
 
 ## License
