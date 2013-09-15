@@ -116,3 +116,29 @@ test('two concurrent shifts', function(t) {
     doShift()
   });
 });
+
+test('concurrently shifting and pushing', function(t) {
+  var db = level()
+
+    , q = queue(db, 'my-awesome-queue')
+
+    , shiftCount = 3
+
+    , verify = verifyCount(db, 0, t)
+
+    , done = function() {
+               if (--shiftCount === 0) {
+                 verify()
+               }
+             }
+
+    , doShift = shift(q, done)
+
+
+  twoElements(q, function() {
+    doShift()
+    doShift()
+    oneElement(q, function() {})
+    doShift()
+  });
+});

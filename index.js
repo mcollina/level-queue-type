@@ -18,34 +18,43 @@ module.exports = Queue
 
 Queue.prototype.push = function(element, callback) {
   var key = (new Date()).toISOString()
+    , stream = this._db._queuesStreams[this._name]
 
   this._db.put(key, element, callback)
+
+  if (stream) {
+    stream.restartIfNoValue = true
+  }
 
   return this;
 }
 
 Queue.prototype.shift = function(callback) {
   if (!this._db._queuesStreams[this._name]) {
-    this._startStream()
+    this._startStream([])
   }
   this._db._queuesStreams[this._name].shifts.push(callback)
 }
 
-Queue.prototype._startStream = function(first) {
+Queue.prototype._startStream = function(shifts) {
   var stream = this._db.createReadStream()
 
     , db = this._db
 
-    , shifts = []
-
     , name = this._name
+
+    , that = this
 
     , onEnd = function(err) {
                 delete db._queuesStreams[name]
                 var shift
-
-                while(shift = shifts.shift()) {
-                  shift(err)
+                
+                if (!this.restartIfNoValue) {
+                  while(shift = shifts.shift()) {
+                    shift(err)
+                  }
+                } else {
+                  that._startStream(shifts)
                 }
               }
 
