@@ -20,7 +20,7 @@ Queue.prototype.push = function(element, callback) {
   var key = (new Date()).toISOString()
     , stream = this._db._queuesStreams[this._name]
 
-  this._db.put(key, element, callback)
+  this._db.put(key, element, { valueEncoding: 'json' }, callback)
 
   if (stream) {
     stream.restartIfNoValue = true
@@ -37,7 +37,7 @@ Queue.prototype.shift = function(callback) {
 }
 
 Queue.prototype._startStream = function(shifts) {
-  var stream = this._db.createReadStream()
+  var stream = this._db.createReadStream({ valueEncoding: 'json' })
 
     , db = this._db
 

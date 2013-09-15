@@ -18,11 +18,11 @@ var db = level(__dirname + '/db');
 var jobs = queue(db);
 
 // add last
-people.push('do something', fn);
+people.push({ job: 'do something' }, fn);
 
 // remove first
 people.shift(function(err, value) {
-  // value will be 'do something'
+  // value will be { job: 'do something' }
 });
 
 ```

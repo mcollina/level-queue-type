@@ -142,3 +142,19 @@ test('concurrently shifting and pushing', function(t) {
     doShift()
   });
 });
+
+test('object support', function(t) {
+  var db = level()
+    , q = queue(db, 'my-awesome-queue')
+    , expected = { hello: 'world' }
+
+  q.push(expected, function(err) {
+    refute(err)
+
+    q.shift(function(err, value) {
+      refute(err)
+      assert.equals(expected, value, 'pushed and shifted values should equal')
+      t.end()
+    })
+  })
+});
