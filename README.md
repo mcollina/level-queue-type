@@ -1,11 +1,9 @@
-
 # level-queue
 
 The queue datatype inside leveldb, it supports concurrent shift and
 pushes!
 
-# [![build
-  status](https://secure.travis-ci.org/mcollina/level-queue.png)](http://travis-ci.org/mcollina/level-queue)
+[![build status](https://secure.travis-ci.org/mcollina/level-queue.png)](http://travis-ci.org/mcollina/level-queue)
 
 ## Example
 
