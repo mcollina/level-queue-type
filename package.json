@@ -1,6 +1,6 @@
 {
   "name": "level-queue",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A queue for LevelUp",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,15 @@
     "level",
     "queue"
   ],
-  "author": "",
-  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcollina/level-queue.git"
+  },
+  "bugs": {
+    "url": "http://github.com/mcollina/level-queue/issues"
+  },
+  "author": "Matteo Collina <hello@matteocollina.com>",
+  "license": "MIT",
   "devDependencies": {
     "level-sublevel": "~5.1.1",
     "tap": "~0.4.4",
