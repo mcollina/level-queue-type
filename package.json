@@ -20,7 +20,6 @@
   "author": "Matteo Collina <hello@matteocollina.com>",
   "license": "MIT",
   "devDependencies": {
-    "level-sublevel": "~5.1.1",
     "tap": "~0.4.4",
     "level-test": "~1.5.1",
     "referee": "~0.11.1"

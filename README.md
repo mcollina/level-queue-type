@@ -9,22 +9,25 @@ status](https://secure.travis-ci.org/mcollina/level-queue-type.png)](http://trav
 ## Example
 
 ```js
-var queue = require('level-queue-type');
-var level = require('level');
+var queue = require('level-queue-type')
+var level = require('level')
 
-var db = level(__dirname + '/db');
+var db = level(__dirname + '/db')
 
-var jobs = queue(db);
+var jobs = queue(db)
 
 // add last
-people.push({ job: 'do something' }, fn);
+people.push({ job: 'do something' }, fn)
 
 // remove first
 people.shift(function(err, value) {
   // value will be { job: 'do something' }
-});
+})
 
 ```
+
+You can also use [level-sublevel](http://npm.im/level-sublevel) to have named
+queues in your Level database.
 
 ## Installation
 

@@ -1,11 +1,8 @@
-var sublevel = require('level-sublevel')
 
-function Queue(db, name) {
+function Queue(db) {
   if (!(this instanceof Queue)) return new Queue(db, name)
 
-  db = sublevel(db)
-
-  this._db = db.sublevel(name)
+  this._db = db
 
   if (!this._db._queuesStreams) {
     this._db._queuesStreams = {}
@@ -26,7 +23,7 @@ Queue.prototype.push = function(element, callback) {
     stream.restartIfNoValue = true
   }
 
-  return this;
+  return this
 }
 
 Queue.prototype.shift = function(callback) {
@@ -67,7 +64,7 @@ Queue.prototype._startStream = function(shifts) {
 
     if (shifts.length === 0) {
       stream.destroy()
-      return;
+      return
     }
   })
 
@@ -78,7 +75,7 @@ Queue.prototype._startStream = function(shifts) {
   stream.shifts = shifts
   db._queuesStreams[name] = stream
 
-  return stream;
+  return stream
 }
 
 Queue.prototype.clear = function(callback) {
@@ -88,6 +85,6 @@ Queue.prototype.clear = function(callback) {
             }))
       .on('close', callback)
 
-  return this;
+  return this
 }
 
