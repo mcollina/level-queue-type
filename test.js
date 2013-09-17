@@ -64,7 +64,7 @@ function clear(q, callback) {
 
 test('push and shift', function(t) {
   var db = level()
-    , q = queue(dbg)
+    , q = queue(db)
 
   oneElement(q, shift(q, function(value) {
     assert.equals('hello world', value, 'pushed and shifted values should equal')
@@ -74,21 +74,21 @@ test('push and shift', function(t) {
 
 test('push should save to the db', function(t) {
   var db = level()
-    , q = queue(dbg)
+    , q = queue(db)
 
   twoElements(q, verifyCount(db, 2, t));
 });
 
 test('shift should remove from the db', function(t) {
   var db = level()
-    , q = queue(dbg)
+    , q = queue(db)
 
   twoElements(q, shift(q, verifyCount(db, 1, t)));
 });
 
 test('clear should remove all elements from the db', function(t) {
   var db = level()
-    , q = queue(dbg)
+    , q = queue(db)
 
   twoElements(q, clear(q, verifyCount(db, 0, t)));
 });
@@ -96,7 +96,7 @@ test('clear should remove all elements from the db', function(t) {
 test('two concurrent shifts', function(t) {
   var db = level()
 
-    , q = queue(dbg)
+    , q = queue(db)
 
     , shiftCount = 2
 
@@ -120,7 +120,7 @@ test('two concurrent shifts', function(t) {
 test('concurrently shifting and pushing', function(t) {
   var db = level()
 
-    , q = queue(dbg)
+    , q = queue(db)
 
     , shiftCount = 3
 
@@ -145,7 +145,7 @@ test('concurrently shifting and pushing', function(t) {
 
 test('object support', function(t) {
   var db = level()
-    , q = queue(dbg)
+    , q = queue(db)
     , expected = { hello: 'world' }
 
   q.push(expected, function(err) {

@@ -1,21 +1,15 @@
 
 function Queue(db) {
-  if (!(this instanceof Queue)) return new Queue(db, name)
+  if (!(this instanceof Queue)) return new Queue(db)
 
   this._db = db
-
-  if (!this._db._queuesStreams) {
-    this._db._queuesStreams = {}
-  }
-
-  this._name = name
 }
 
 module.exports = Queue
 
 Queue.prototype.push = function(element, callback) {
   var key = (new Date()).toISOString()
-    , stream = this._db._queuesStreams[this._name]
+    , stream = this._db._queuesStream
 
   this._db.put(key, element, { valueEncoding: 'json' }, callback)
 
@@ -27,10 +21,10 @@ Queue.prototype.push = function(element, callback) {
 }
 
 Queue.prototype.shift = function(callback) {
-  if (!this._db._queuesStreams[this._name]) {
+  if (!this._db._queueStream) {
     this._startStream([])
   }
-  this._db._queuesStreams[this._name].shifts.push(callback)
+  this._db._queueStream.shifts.push(callback)
 }
 
 Queue.prototype._startStream = function(shifts) {
@@ -38,12 +32,10 @@ Queue.prototype._startStream = function(shifts) {
 
     , db = this._db
 
-    , name = this._name
-
     , that = this
 
     , onEnd = function(err) {
-                delete db._queuesStreams[name]
+                delete db._queueStream
                 var shift
                 
                 if (!this.restartIfNoValue) {
@@ -73,7 +65,7 @@ Queue.prototype._startStream = function(shifts) {
   stream.on('end', onEnd)
 
   stream.shifts = shifts
-  db._queuesStreams[name] = stream
+  db._queueStream = stream
 
   return stream
 }
