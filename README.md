@@ -24,6 +24,13 @@ people.shift(function(err, value) {
   // value will be { job: 'do something' }
 })
 
+// remove everything
+people.shiftAll(function(err, value) {
+  // value will be { job: 'do something' }
+}, function(err) {
+  // called when ended
+})
+
 ```
 
 You can also use [level-sublevel](http://npm.im/level-sublevel) to have named
