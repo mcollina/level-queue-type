@@ -178,6 +178,6 @@ test('shift all values', function(t) {
 
 
   twoElements(q, function() {
-    q.shiftAll(function() {}, verify);
+    q.shiftAll(function() {}, verify)
   });
 });

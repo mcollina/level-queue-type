@@ -52,11 +52,11 @@ Queue.prototype._startStream = function(shifts) {
                   }
 
                   if (stream.unlimitedEndCallback) {
-                    stream.unlimitedEndCallback(err);
+                    stream.unlimitedEndCallback(err)
                   }
                 } else {
                   that._startStream(shifts)
-                  this._db._queueStream.unlimitedEndCallback = stream.unlimitedEndCallback;
+                  that._db._queueStream.unlimitedEndCallback = stream.unlimitedEndCallback
                 }
               }
 
