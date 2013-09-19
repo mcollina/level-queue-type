@@ -9,7 +9,7 @@ module.exports = Queue
 
 Queue.prototype.push = function(element, callback) {
   var key = (new Date()).toISOString()
-    , stream = this._db._queuesStream
+    , stream = this._db._queueStream
 
   this._db.put(key, element, { valueEncoding: 'json' }, callback)
 
@@ -28,9 +28,9 @@ Queue.prototype.shift = function(callback) {
 }
 
 Queue.prototype.shiftAll = function(callback, endCallback) {
-  callback._unlimited = true;
-  this.shift(callback);
-  this._db._queueStream.unlimitedEndCallback = endCallback;
+  callback._unlimited = true
+  this.shift(callback)
+  this._db._queueStream.unlimitedEndCallback = endCallback
 }
 
 Queue.prototype._startStream = function(shifts) {
@@ -44,7 +44,7 @@ Queue.prototype._startStream = function(shifts) {
                 delete db._queueStream
                 var shift
                 
-                if (!this.restartIfNoValue) {
+                if (!stream.restartIfNoValue) {
                   while(shift = shifts.shift()) {
                     if (!shift._unlimited) {
                       shift(err)
