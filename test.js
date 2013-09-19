@@ -158,3 +158,26 @@ test('object support', function(t) {
     })
   })
 });
+
+test('shift all values', function(t) {
+  var db = level()
+
+    , q = queue(db)
+
+    , shiftCount = 2
+
+    , verify = verifyCount(db, 0, t)
+
+    , done = function() {
+               if (--shiftCount === 0) {
+                 verify()
+               }
+             }
+
+    , doShift = shift(q, done)
+
+
+  twoElements(q, function() {
+    q.shiftAll(function() {}, verify);
+  });
+});

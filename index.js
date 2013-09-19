@@ -27,6 +27,12 @@ Queue.prototype.shift = function(callback) {
   this._db._queueStream.shifts.push(callback)
 }
 
+Queue.prototype.shiftAll = function(callback, endCallback) {
+  callback._unlimited = true;
+  this.shift(callback);
+  this._db._queueStream.unlimitedEndCallback = endCallback;
+}
+
 Queue.prototype._startStream = function(shifts) {
   var stream = this._db.createReadStream({ valueEncoding: 'json' })
 
@@ -40,15 +46,26 @@ Queue.prototype._startStream = function(shifts) {
                 
                 if (!this.restartIfNoValue) {
                   while(shift = shifts.shift()) {
-                    shift(err)
+                    if (!shift._unlimited) {
+                      shift(err)
+                    }
+                  }
+
+                  if (stream.unlimitedEndCallback) {
+                    stream.unlimitedEndCallback(err);
                   }
                 } else {
                   that._startStream(shifts)
+                  this._db._queueStream.unlimitedEndCallback = stream.unlimitedEndCallback;
                 }
               }
 
   stream.on('data', function(data) {
     var callback = shifts.shift()
+
+    if (callback._unlimited) {
+      shifts.unshift(callback)
+    }
 
     db.del(data.key, function(err) {
       callback(err, data.value)
