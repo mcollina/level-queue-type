@@ -1,6 +1,6 @@
 {
   "name": "level-queue-type",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A queue for LevelUp",
   "main": "index.js",
   "scripts": {
