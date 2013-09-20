@@ -181,3 +181,22 @@ test('shift all values', function(t) {
     q.shiftAll(function() {}, verify)
   });
 });
+
+test('two concurrent push', function(t) {
+  var db = level()
+
+    , q = queue(db)
+
+    , pushCount = 2
+
+    , verify = verifyCount(db, 2, t)
+
+    , done = function() {
+               if (--pushCount === 0) {
+                 verify()
+               }
+             }
+
+  q.push('hello world', done)
+  q.push('hello world', done)
+});

@@ -3,12 +3,13 @@ function Queue(db) {
   if (!(this instanceof Queue)) return new Queue(db)
 
   this._db = db
+  this._db._startTime = Date.now()
 }
 
 module.exports = Queue
 
 Queue.prototype.push = function(element, callback) {
-  var key = (new Date()).toISOString()
+  var key = [this._db._startTime].concat(process.hrtime()).join(":")
     , stream = this._db._queueStream
 
   this._db.put(key, element, { valueEncoding: 'json' }, callback)
